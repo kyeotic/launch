@@ -1,12 +1,12 @@
 import { A } from '@solidjs/router'
-import { PLAYERS, USER_PROFILE, UTIL } from './routes'
+import { USER_PROFILE } from './routes'
 import classnames from 'classnames'
 
 import { ThemeToggle } from '../components'
 import { createSignal, For } from 'solid-js'
 
 const navLinks = [
-  { title: 'Players', href: PLAYERS, icon: 'fa-people-group' },
+  // { title: 'Players', href: PLAYERS, icon: 'fa-people-group' },
   // { title: 'Tags', href: TAGS, icon: 'fa-tag' },
   // { title: 'Teams', href: TEAMS, icon: 'fa-people-group' },
 ]

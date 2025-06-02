@@ -1,13 +1,13 @@
 import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 
 import UserStore from './users/userStore.ts'
-import PlayerStore from './players/playerStore.ts'
 import { lazy } from './util/lazy.ts'
+import config from './config.ts'
 
 export interface InnerContext {
+  config: typeof config
   stores: {
     users: UserStore
-    players: PlayerStore
   }
 }
 
@@ -17,9 +17,9 @@ const appContext = lazy(createContext)
 export async function createContext(): Promise<InnerContext> {
   const kv = await Deno.openKv()
   return {
+    config,
     stores: {
       users: new UserStore(kv),
-      players: new PlayerStore(kv),
     },
   } as InnerContext
 }

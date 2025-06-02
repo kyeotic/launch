@@ -1,0 +1,23 @@
+You are an expert typescript developer.
+
+This project uses
+
+- Deno for the server
+- SolidJS for the client
+
+
+# Client Rules
+
+- Use the re-usable components in `components` whenever possible
+- When using `/components` always import from `components/index.ts`
+- When showing text (e.g. body copy, labels, titles) use the components in `components/typography`
+- Always include file extensions in local file imports
+- Do not use protocol specifiers (e.g. `npm:` or `:jsr`) for imports that are in the import map
+- Use tailwindcss for styling
+
+
+# Server Rules
+
+- Use Deno.kv for the database
+- use `@kyeotic/server` patterns seen in `users/userStore.ts` for KV access, including `listAllValues` for list access and `makeSet` for key creation
+- use zod for all API inputs

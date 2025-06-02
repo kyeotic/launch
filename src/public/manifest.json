@@ -1,6 +1,6 @@
 {
-  "short_name": "APP_NAME",
-  "name": "APP_NAME - Deno Template",
+  "short_name": "Launch",
+  "name": "Launch",
   "icons": [
     {
       "src": "favicon.ico",
