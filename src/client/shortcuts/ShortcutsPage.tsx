@@ -54,8 +54,12 @@ export default function ShortcutsPage(): JSX.Element {
             <Button primary onclick={() => handleKitchenUse(0)}>
               Clear
             </Button>
-            <Button onclick={() => handleKitchenUse(10)}>10 Minutes</Button>
-            <Button onclick={() => handleKitchenUse(30)}>30 Minutes</Button>
+            <Button variant="purple" onclick={() => handleKitchenUse(10)}>
+              10 Minutes
+            </Button>
+            <Button variant="orange" onclick={() => handleKitchenUse(30)}>
+              30 Minutes
+            </Button>
             <Button danger onclick={() => handleKitchenUse(60)}>
               60 Minutes
             </Button>

@@ -18,5 +18,5 @@ variable "zone_name" {
 }
 
 variable "deno_deploy_acme" {
-  default = "84e3160caf2e7082aeb72eb8._acme.deno.dev."
+  default = "66c260426a2b60bceaaf2c43._acme.deno.dev."
 }

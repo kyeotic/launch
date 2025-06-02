@@ -17,7 +17,7 @@ pushd "${_infra}"
 terraform init \
   -backend-config bucket="${terraform_state_bucket}" \
   -backend-config="region=${TF_VAR_region:-us-west-2}" \
-  -backend-config="key=$launch" \
+  -backend-config="key=$APPNAME" \
   -backend-config="encrypt=true"
 
 terraform apply -auto-approve
