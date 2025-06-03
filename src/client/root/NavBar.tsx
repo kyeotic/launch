@@ -36,7 +36,7 @@ export default function NavBar() {
         <A href="/" class={navLinkClass} activeClass={navActiveClass} end>
           <img
             class="flex-0 h-7 object-cover"
-            src="/apple-touch-icon.png"
+            src="/kyerell_home-mono-pinky.png"
             alt="home"
           />
           <span class="flex-0 font-bold text-xl">Home</span>

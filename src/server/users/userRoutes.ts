@@ -21,6 +21,7 @@ export const userRouter = router({
       self: self!,
       discord: {
         kitchen: ctx.config.discord.kitchen,
+        laundry: ctx.config.discord.laundry,
       },
     }
   }),
