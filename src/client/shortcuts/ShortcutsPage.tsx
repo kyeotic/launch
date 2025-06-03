@@ -35,6 +35,28 @@ export default function ShortcutsPage(): JSX.Element {
     }
   }
 
+  function handleLaundryUse(isInUse: boolean) {
+    if (!isInUse) {
+      send(
+        discord.laundry,
+        payload(
+          'Laundry In Use',
+          'green',
+          `${store.self?.profile.name} is done with laundry`,
+        ),
+      )
+    } else {
+      send(
+        discord.laundry,
+        payload(
+          'Laundry In Use',
+          'red',
+          `${store.self?.profile.name} is using the laundry`,
+        ),
+      )
+    }
+  }
+
   return (
     <div class="space-y-6">
       <Show
@@ -48,42 +70,41 @@ export default function ShortcutsPage(): JSX.Element {
           </div>
         }
       >
-        <Show
-          when={discord.kitchen}
-          fallback={
-            <div class="bg-red-100 border-l-4 border-red-500 p-4">
-              <Text class="text-red-700">
-                Discord webhook is not configured. Please contact an
-                administrator.
-              </Text>
-            </div>
-          }
-        >
-          <Panel>
-            <H2>Kitchen Use</H2>
-            <div class="mt-4 grid grid-cols-2 md:flex md:flex-wrap gap-2 sm:gap-4">
-              <Button primary onclick={() => handleKitchenUse(null)}>
-                Clear
-              </Button>
-              <Button variant="purple" onclick={() => handleKitchenUse('10m')}>
-                10 Minutes
-              </Button>
-              <Button variant="orange" onclick={() => handleKitchenUse('30m')}>
-                30 Minutes
-              </Button>
-              <Button
-                danger
-                onclick={() =>
-                  handleKitchenUse(
-                    'so long that you might as well build a new one',
-                  )
-                }
-              >
-                BIG TIME
-              </Button>
-            </div>
-          </Panel>
-        </Show>
+        <Panel>
+          <H2>Kitchen Use</H2>
+          <div class="mt-4 grid grid-cols-2 md:flex md:flex-wrap gap-2 sm:gap-4">
+            <Button primary onclick={() => handleKitchenUse(null)}>
+              Clear
+            </Button>
+            <Button variant="purple" onclick={() => handleKitchenUse('10m')}>
+              10 Minutes
+            </Button>
+            <Button variant="orange" onclick={() => handleKitchenUse('30m')}>
+              30 Minutes
+            </Button>
+            <Button
+              danger
+              onclick={() =>
+                handleKitchenUse(
+                  'so long that you might as well build a new one',
+                )
+              }
+            >
+              BIG TIME
+            </Button>
+          </div>
+        </Panel>
+        <Panel>
+          <H2>Laundry Use</H2>
+          <div class="mt-4 grid grid-cols-2 md:flex md:flex-wrap gap-2 sm:gap-4">
+            <Button primary onclick={() => handleLaundryUse(false)}>
+              Clear
+            </Button>
+            <Button danger onclick={() => handleLaundryUse(true)}>
+              In Use
+            </Button>
+          </div>
+        </Panel>
       </Show>
     </div>
   )
