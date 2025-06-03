@@ -1,37 +1,37 @@
 import { JSX, Show } from 'solid-js'
 import { useStores } from '../data/stores'
-import { Button, H2, Text } from '../components'
+import { Button, H2, Text, Panel } from '../components'
 import { Link } from '../components/Typography/Text'
 import { USER_PROFILE } from '../root/routes'
 import { send, payload } from '../discord/hooks'
 
+type KitchenDuration = string | null
+
 export default function ShortcutsPage(): JSX.Element {
   const { user: store, discord } = useStores()
 
-  function handleKitchenUse(minutes: number) {
+  function handleKitchenUse(duration: KitchenDuration) {
     console.log(
-      `Kitchen use for ${minutes} minutes by ${store.self?.profile.name}`,
+      `Kitchen use for ${duration ?? 'clear'} by ${store.self?.profile.name}`,
     )
-    if (discord.kitchen) {
-      if (minutes == 0) {
-        send(
-          discord.kitchen,
-          payload(
-            'Kitchen In Use',
-            'green',
-            `${store.self?.profile.name} is done using the kitchen`,
-          ),
-        )
-      } else {
-        send(
-          discord.kitchen,
-          payload(
-            'Kitchen In Use',
-            'red',
-            `${store.self?.profile.name} is using the kitchen for ${minutes} minutes`,
-          ),
-        )
-      }
+    if (duration === null) {
+      send(
+        discord.kitchen,
+        payload(
+          'Kitchen In Use',
+          'green',
+          `${store.self?.profile.name} is done using the kitchen`,
+        ),
+      )
+    } else {
+      send(
+        discord.kitchen,
+        payload(
+          'Kitchen In Use',
+          'red',
+          `${store.self?.profile.name} is using the kitchen for ${duration}`,
+        ),
+      )
     }
   }
 
@@ -48,23 +48,42 @@ export default function ShortcutsPage(): JSX.Element {
           </div>
         }
       >
-        <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6">
-          <H2>Kitchen Use</H2>
-          <div class="mt-4 flex gap-4">
-            <Button primary onclick={() => handleKitchenUse(0)}>
-              Clear
-            </Button>
-            <Button variant="purple" onclick={() => handleKitchenUse(10)}>
-              10 Minutes
-            </Button>
-            <Button variant="orange" onclick={() => handleKitchenUse(30)}>
-              30 Minutes
-            </Button>
-            <Button danger onclick={() => handleKitchenUse(60)}>
-              60 Minutes
-            </Button>
-          </div>
-        </div>
+        <Show
+          when={discord.kitchen}
+          fallback={
+            <div class="bg-red-100 border-l-4 border-red-500 p-4">
+              <Text class="text-red-700">
+                Discord webhook is not configured. Please contact an
+                administrator.
+              </Text>
+            </div>
+          }
+        >
+          <Panel>
+            <H2>Kitchen Use</H2>
+            <div class="mt-4 grid grid-cols-2 md:flex md:flex-wrap gap-2 sm:gap-4">
+              <Button primary onclick={() => handleKitchenUse(null)}>
+                Clear
+              </Button>
+              <Button variant="purple" onclick={() => handleKitchenUse('10m')}>
+                10 Minutes
+              </Button>
+              <Button variant="orange" onclick={() => handleKitchenUse('30m')}>
+                30 Minutes
+              </Button>
+              <Button
+                danger
+                onclick={() =>
+                  handleKitchenUse(
+                    'so long that you might as well build a new one',
+                  )
+                }
+              >
+                BIG TIME
+              </Button>
+            </div>
+          </Panel>
+        </Show>
       </Show>
     </div>
   )

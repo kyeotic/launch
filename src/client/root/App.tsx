@@ -7,6 +7,7 @@ import Auth from '../auth/Auth'
 import { Routes } from './routes'
 import { StoresProvider } from '../data/stores'
 import { TrpcProvider } from '../data/trpc'
+import StoresInit from '../data/StoresInit'
 
 export default function Root() {
   return <Routes root={App} />
@@ -21,8 +22,7 @@ export function App(props: ParentProps) {
           <Auth>
             <TrpcProvider>
               <StoresProvider>
-                <Init />
-                {props.children}
+                <StoresInit>{props.children}</StoresInit>
               </StoresProvider>
             </TrpcProvider>
           </Auth>

@@ -1,4 +1,4 @@
-import { type ParentProps } from 'solid-js'
+import { Accessor, createSignal, type ParentProps } from 'solid-js'
 
 import { requiredContext } from '../util/context'
 import { useTrpc } from './trpc'
@@ -6,15 +6,9 @@ import { UserStore } from '../user/store'
 import { DiscordStore } from '../discord/store'
 
 export interface Stores {
+  hasInitialized: Accessor<boolean>
   user: UserStore
   discord: DiscordStore
-}
-
-interface AppData {
-  self: any
-  discord: {
-    kitchen: string
-  }
 }
 
 const { use: useStores, Provider: StoresProvider } = requiredContext<
@@ -23,15 +17,20 @@ const { use: useStores, Provider: StoresProvider } = requiredContext<
 >('AppStores', (props) => {
   const trpc = useTrpc()
   const appData = trpc.users.appData.query()
+  const [hasInitialized, setHasInitialized] = createSignal(false)
+
+  appData.then(() => setHasInitialized(true))
+
   return {
     user: new UserStore(
       trpc,
-      appData.then((d: AppData) => d.self),
+      appData.then((d) => d.self),
     ),
     discord: new DiscordStore(
       trpc,
-      appData.then((d: AppData) => d.discord),
+      appData.then((d) => d.discord),
     ),
+    hasInitialized,
   } as Stores
 })
 
