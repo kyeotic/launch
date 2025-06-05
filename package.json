@@ -41,6 +41,7 @@
     "solid-toast": "^0.5.0",
     "store2": "^2.14.2",
     "superjson": "^2.2.2",
+    "ts-pattern": "^5.7.1",
     "url-join": "^5.0.0",
     "zod": "^3.25.48"
   },

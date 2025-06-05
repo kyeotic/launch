@@ -19,10 +19,10 @@ export const userRouter = router({
     ])
     return {
       self: self!,
-      discord: {
-        kitchen: ctx.config.discord.kitchen,
-        laundry: ctx.config.discord.laundry,
-      },
+      // discord: {
+      //   kitchen: ctx.config.discord.kitchen,
+      //   laundry: ctx.config.discord.laundry,
+      // },
     }
   }),
   updateProfile: authProcedure

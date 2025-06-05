@@ -1,60 +1,43 @@
 import { JSX, Show } from 'solid-js'
+import { sample } from 'lodash'
 import { useStores } from '../data/stores'
-import { Button, H2, Text, Panel } from '../components'
+import { Button, H2, Text, Panel, toast } from '../components'
 import { Link } from '../components/Typography/Text'
 import { USER_PROFILE } from '../root/routes'
-import { send, payload } from '../discord/hooks'
+import { useTrpc } from '../data/trpc'
+import { WebhookType } from '../../server/discord/types'
 
 type KitchenDuration = string | null
 
-export default function ShortcutsPage(): JSX.Element {
-  const { user: store, discord } = useStores()
+const BIG_TIMES = [
+  'so long that you might as well build a new one',
+  'a really, really long time',
+  'too long to estimate',
+  'so long that they are sorry',
+]
 
-  function handleKitchenUse(duration: KitchenDuration) {
-    console.log(
-      `Kitchen use for ${duration ?? 'clear'} by ${store.self?.profile.name}`,
+export default function ShortcutsPage(): JSX.Element {
+  const trpc = useTrpc()
+  const { user: store } = useStores()
+
+  async function handleKitchenUse(duration: KitchenDuration) {
+    await trpc.discord.send.mutate(
+      duration === null
+        ? { type: WebhookType.KitchenClear }
+        : { type: WebhookType.KitchenInUse, duration },
     )
-    if (duration === null) {
-      send(
-        discord.kitchen,
-        payload(
-          'Kitchen Clear',
-          'green',
-          `${store.self?.profile.name} is done using the kitchen`,
-        ),
-      )
-    } else {
-      send(
-        discord.kitchen,
-        payload(
-          'Kitchen In Use',
-          'red',
-          `${store.self?.profile.name} is using the kitchen for ${duration}`,
-        ),
-      )
-    }
+
+    toast.success('Sent')
   }
 
-  function handleLaundryUse(isInUse: boolean) {
-    if (!isInUse) {
-      send(
-        discord.laundry,
-        payload(
-          'Laundry Clear',
-          'green',
-          `${store.self?.profile.name} is done with laundry`,
-        ),
-      )
-    } else {
-      send(
-        discord.laundry,
-        payload(
-          'Laundry In Use',
-          'red',
-          `${store.self?.profile.name} is using the laundry`,
-        ),
-      )
-    }
+  async function handleLaundryUse(isInUse: boolean) {
+    await trpc.discord.send.mutate(
+      isInUse
+        ? { type: WebhookType.LaundryInUse }
+        : { type: WebhookType.LaundryClear },
+    )
+
+    toast.success('Sent')
   }
 
   return (
@@ -82,14 +65,7 @@ export default function ShortcutsPage(): JSX.Element {
             <Button variant="orange" onclick={() => handleKitchenUse('30m')}>
               30 Minutes
             </Button>
-            <Button
-              danger
-              onclick={() =>
-                handleKitchenUse(
-                  'so long that you might as well build a new one',
-                )
-              }
-            >
+            <Button danger onclick={() => handleKitchenUse(sample(BIG_TIMES)!)}>
               BIG TIME
             </Button>
           </div>

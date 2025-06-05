@@ -38,6 +38,7 @@
     "npm:nanoid@^5.1.5": "5.1.5",
     "npm:neat-csv@latest": "7.0.0",
     "npm:superjson@^2.2.2": "2.2.2",
+    "npm:ts-pattern@^5.7.1": "5.7.1",
     "npm:url-join@5": "5.0.0",
     "npm:zod@^3.25.48": "3.25.48"
   },
@@ -211,6 +212,9 @@
         "copy-anything"
       ]
     },
+    "ts-pattern@5.7.1": {
+      "integrity": "sha512-EGs8PguQqAAUIcQfK4E9xdXxB6s2GK4sJfT/vcc9V1ELIvC4LH/zXu2t/5fajtv6oiRCxdv7BgtVK3vWgROxag=="
+    },
     "typescript@5.8.2": {
       "integrity": "sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==",
       "bin": true
@@ -237,6 +241,7 @@
       "npm:lodash-es@^4.17.21",
       "npm:nanoid@^5.1.5",
       "npm:superjson@^2.2.2",
+      "npm:ts-pattern@^5.7.1",
       "npm:url-join@5",
       "npm:zod@^3.25.48"
     ]

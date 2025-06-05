@@ -1267,6 +1267,7 @@
       "npm:lodash-es@^4.17.21",
       "npm:nanoid@^5.1.5",
       "npm:superjson@^2.2.2",
+      "npm:ts-pattern@^5.7.1",
       "npm:url-join@5",
       "npm:zod@^3.25.48"
     ],
@@ -1298,6 +1299,7 @@
         "npm:superjson@^2.2.2",
         "npm:tailwindcss-safe-area@~0.2.2",
         "npm:tailwindcss@^4.0.17",
+        "npm:ts-pattern@^5.7.1",
         "npm:typescript@^5.8.2",
         "npm:url-join@5",
         "npm:vite-plugin-solid@^2.11.6",
