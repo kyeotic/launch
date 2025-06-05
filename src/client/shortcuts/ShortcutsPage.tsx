@@ -18,7 +18,7 @@ export default function ShortcutsPage(): JSX.Element {
       send(
         discord.kitchen,
         payload(
-          'Kitchen In Use',
+          'Kitchen Clear',
           'green',
           `${store.self?.profile.name} is done using the kitchen`,
         ),
@@ -40,7 +40,7 @@ export default function ShortcutsPage(): JSX.Element {
       send(
         discord.laundry,
         payload(
-          'Laundry In Use',
+          'Laundry Clear',
           'green',
           `${store.self?.profile.name} is done with laundry`,
         ),
