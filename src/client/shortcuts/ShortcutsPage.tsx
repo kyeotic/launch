@@ -21,23 +21,31 @@ export default function ShortcutsPage(): JSX.Element {
   const { user: store } = useStores()
 
   async function handleKitchenUse(duration: KitchenDuration) {
-    await trpc.discord.send.mutate(
-      duration === null
-        ? { type: WebhookType.KitchenClear }
-        : { type: WebhookType.KitchenInUse, duration },
-    )
+    try {
+      await trpc.discord.send.mutate(
+        duration === null
+          ? { type: WebhookType.KitchenClear }
+          : { type: WebhookType.KitchenInUse, duration },
+      )
 
-    toast.success('Sent')
+      toast.success('Sent')
+    } catch (e) {
+      toast.error('Failed to send')
+    }
   }
 
   async function handleLaundryUse(isInUse: boolean) {
-    await trpc.discord.send.mutate(
-      isInUse
-        ? { type: WebhookType.LaundryInUse }
-        : { type: WebhookType.LaundryClear },
-    )
+    try {
+      await trpc.discord.send.mutate(
+        isInUse
+          ? { type: WebhookType.LaundryInUse }
+          : { type: WebhookType.LaundryClear },
+      )
 
-    toast.success('Sent')
+      toast.success('Sent')
+    } catch (e) {
+      toast.error('Failed to send')
+    }
   }
 
   return (
